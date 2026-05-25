@@ -43,6 +43,12 @@
     min-height: 100vh;
   }
 
+  .hero-overlay-copy {
+    left: 34px;
+    bottom: 70px;
+    max-width: 560px;
+  }
+
   .landing-doodles img:nth-child(n+13) { display: none; }
 
   .hero-image,
@@ -118,6 +124,18 @@
   .hero-full img {
     min-height: 100vh;
     height: 100vh;
+  }
+
+  .hero-overlay-copy {
+    left: 20px;
+    right: 20px;
+    bottom: 54px;
+    max-width: none;
+  }
+
+  .hero-outline-btn {
+    min-width: 150px;
+    min-height: 50px;
   }
 
   .landing-doodles {
