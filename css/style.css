@@ -863,15 +863,15 @@ body .site-header {
   position: fixed;
   left: 0;
   right: 0;
-  background: rgba(248, 246, 242, .18);
-  border-bottom: 1px solid rgba(233, 228, 220, .28);
-  backdrop-filter: blur(6px);
+  background: transparent;
+  border-bottom: 0;
+  backdrop-filter: none;
 }
 
 body .site-header.is-scrolled {
   height: var(--nav-height);
-  background: rgba(248, 246, 242, .18);
-  border-bottom: 1px solid rgba(233, 228, 220, .28);
+  background: transparent;
+  border-bottom: 0;
   box-shadow: none;
 }
 
