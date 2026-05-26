@@ -218,6 +218,14 @@
 }
 
 @media (max-width: 768px) {
+  .filter-panel {
+    display: none;
+  }
+
+  .listing-layout {
+    grid-template-columns: 1fr;
+  }
+
   .product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 22px 14px;
