@@ -68,6 +68,93 @@ document.querySelectorAll(".swatch").forEach((swatch) => {
   });
 });
 
+const CART_KEY = "nidolino_cart";
+const getCart = () => JSON.parse(localStorage.getItem(CART_KEY) || "[]");
+const saveCart = (cart) => {
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  updateCartCount();
+};
+const rupees = (value) => `₹${value.toLocaleString("en-IN")}`;
+
+const updateCartCount = () => {
+  const count = getCart().reduce((sum, item) => sum + item.qty, 0);
+  document.querySelectorAll('a[href="cart.html"]').forEach((link) => {
+    let badge = link.querySelector(".cart-count");
+    if (!badge) {
+      badge = document.createElement("span");
+      badge.className = "cart-count";
+      link.appendChild(badge);
+    }
+    badge.textContent = count;
+    badge.hidden = count === 0;
+  });
+};
+
+const addCurrentProduct = () => {
+  const panel = document.querySelector(".product-panel");
+  if (!panel) return;
+  const product = {
+    id: "aurora-convertible-crib",
+    name: panel.querySelector("h1").textContent.trim(),
+    price: 68000,
+    image: document.querySelector(".gallery-main img")?.getAttribute("src") || "images/products/aurora-crib.jpg",
+    qty: Number(document.querySelector("[data-qty] input")?.value || 1)
+  };
+  const cart = getCart();
+  const existing = cart.find((item) => item.id === product.id);
+  if (existing) existing.qty += product.qty;
+  else cart.push(product);
+  saveCart(cart);
+};
+
+document.querySelector("[data-add-cart]")?.addEventListener("click", () => {
+  addCurrentProduct();
+  document.querySelector("[data-add-cart]").textContent = "Added";
+  window.setTimeout(() => document.querySelector("[data-add-cart]").textContent = "Add to Cart", 900);
+});
+
+document.querySelector("[data-buy-now]")?.addEventListener("click", () => {
+  addCurrentProduct();
+  window.location.href = "cart.html";
+});
+
+const renderCart = () => {
+  const target = document.querySelector("[data-cart-page]");
+  if (!target) return;
+  const cart = getCart();
+  if (!cart.length) return;
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  target.innerHTML = `
+    <div class="cart-items">
+      ${cart.map((item) => `
+        <article class="cart-item" data-id="${item.id}">
+          <img src="${item.image}" alt="${item.name}">
+          <div><h3>${item.name}</h3><p>${rupees(item.price)}</p></div>
+          <div class="cart-item-actions">
+            <div class="qty-control" data-cart-qty><button data-action="decrease">−</button><input value="${item.qty}" aria-label="Quantity"><button data-action="increase">+</button></div>
+            <button class="remove-cart">Remove</button>
+          </div>
+        </article>`).join("")}
+    </div>
+    <div class="cart-total"><h2>Total ${rupees(total)}</h2><a class="btn" href="contact.html">Checkout Inquiry</a></div>
+  `;
+};
+
+document.addEventListener("click", (event) => {
+  const item = event.target.closest(".cart-item");
+  if (!item) return;
+  const cart = getCart();
+  const found = cart.find((entry) => entry.id === item.dataset.id);
+  if (!found) return;
+  if (event.target.matches(".remove-cart")) saveCart(cart.filter((entry) => entry.id !== found.id));
+  if (event.target.dataset.action === "increase") { found.qty += 1; saveCart(cart); }
+  if (event.target.dataset.action === "decrease") { found.qty = Math.max(1, found.qty - 1); saveCart(cart); }
+  renderCart();
+});
+
+updateCartCount();
+renderCart();
+
 const revealItems = document.querySelectorAll(".reveal");
 if ("IntersectionObserver" in window) {
   const observer = new IntersectionObserver((entries) => {

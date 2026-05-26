@@ -162,6 +162,24 @@
     min-height: 50px;
   }
 
+  .cart-item {
+    grid-template-columns: 84px 1fr;
+  }
+
+  .cart-item img {
+    width: 84px;
+  }
+
+  .cart-item-actions {
+    grid-column: 1 / -1;
+    justify-items: start;
+  }
+
+  .cart-total {
+    align-items: start;
+    flex-direction: column;
+  }
+
   .landing-doodles {
     inset: 78px 0 auto;
     height: 900px;

@@ -131,6 +131,7 @@ button, input, select, textarea {
   display: inline-grid;
   place-items: center;
   cursor: pointer;
+  position: relative;
 }
 
 .icon-btn svg, .menu-toggle svg {
@@ -140,6 +141,13 @@ button, input, select, textarea {
   stroke-width: 1.55;
   fill: none;
   filter: drop-shadow(0 1px 5px rgba(47, 47, 47, .24));
+}
+
+body:not(.home-page) .icon-btn svg,
+body:not(.home-page) .menu-toggle svg {
+  stroke: var(--sage);
+  opacity: 1;
+  filter: none;
 }
 
 .menu-toggle { display: none; }
@@ -797,6 +805,64 @@ p { margin: 0; color: var(--olive); }
 
 .cart-empty p {
   margin: 14px 0 26px;
+}
+
+.cart-count {
+  position: absolute;
+  top: 3px;
+  right: 2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--text);
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 22px;
+  align-items: center;
+  border-top: 1px solid var(--beige);
+  padding: 22px 0;
+}
+
+.cart-item img {
+  width: 120px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--cream);
+}
+
+.cart-item h3 {
+  margin-bottom: 6px;
+}
+
+.cart-item-actions {
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+}
+
+.cart-total {
+  border-top: 1px solid var(--beige);
+  margin-top: 24px;
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.remove-cart {
+  border: 0;
+  background: transparent;
+  color: var(--olive);
+  cursor: pointer;
 }
 
 .contact-card {
