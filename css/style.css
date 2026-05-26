@@ -8,12 +8,16 @@
   --olive: #6f786c;
   --max: 100%;
   --nav-height: 84px;
+  --page-top-gap: 56px;
   --ease: 240ms ease;
 }
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-height) + 24px);
+}
 
 body {
   margin: 0;
@@ -140,7 +144,17 @@ button, input, select, textarea {
 
 .menu-toggle { display: none; }
 
-.page-main { overflow: hidden; }
+main {
+  padding-top: var(--nav-height);
+}
+
+.home-page main {
+  padding-top: 0;
+}
+
+.page-main {
+  overflow: hidden;
+}
 
 .landing-doodles {
   position: absolute;
@@ -481,7 +495,7 @@ p { margin: 0; color: var(--olive); }
 .page-hero {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 76px clamp(42px, 6vw, 112px) 44px;
+  padding: var(--page-top-gap) clamp(42px, 6vw, 112px) 44px;
 }
 
 .page-hero .lead { margin-top: 20px; }
@@ -869,16 +883,16 @@ body .site-header {
   position: fixed;
   left: 0;
   right: 0;
-  background: rgba(160, 158, 155, 0.08);
-  border-bottom: 1px solid rgba(160, 158, 155, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(248, 246, 242, 0.14);
+  border-bottom: 1px solid rgba(248, 246, 242, 0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 body .site-header.is-scrolled {
   height: var(--nav-height);
-  background: rgba(196, 192, 187, 0.15);
-  border-bottom: 1px solid rgba(196, 192, 187, 0.15);
+  background: rgba(248, 246, 242, 0.14);
+  border-bottom: 1px solid rgba(248, 246, 242, 0.18);
   box-shadow: none;
 }
 
@@ -978,8 +992,8 @@ body .nav-links a {
 .hero-full {
   max-width: none;
   width: 100%;
-  min-height: 100vh;
-  height: 100vh;
+  min-height: calc(100vh - var(--nav-height));
+  height: calc(100vh - var(--nav-height));
   margin: 0;
   padding: 0;
   display: block;
@@ -990,9 +1004,15 @@ body .nav-links a {
 .hero-full img {
   width: 100%;
   height: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--nav-height));
   object-fit: cover;
   object-position: center;
+}
+
+.home-page .hero-full,
+.home-page .hero-full img {
+  min-height: 100vh;
+  height: 100vh;
 }
 
 .hero-motion-image {
@@ -1067,4 +1087,62 @@ body .nav-links a {
 .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+
+/* product detail radio button */
+.custom-option-group {
+  margin-bottom: 28px;
+}
+
+.option-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6f786c;
+  margin-bottom: 14px;
+  font-family: "Manrope", sans-serif;
+}
+
+.custom-radio-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #d8d2c8;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: #f8f6f2;
+  border-radius: 14px;
+}
+
+.custom-radio-card:hover {
+  border-color: #879783;
+  background: #fffdf8;
+}
+
+.custom-radio-card input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #879783;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.custom-radio-card input[type="radio"]:checked::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: #879783;
+  border-radius: 50%;
+}
+
+.custom-radio-card span {
+  font-size: 0.98rem;
+  color: #2f2f2f;
+  font-family: "Manrope", sans-serif;
 }

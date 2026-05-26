@@ -3,6 +3,12 @@ const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 const loader = document.querySelector(".page-loader");
 
+const syncNavHeight = () => {
+  if (!header) return;
+  document.documentElement.style.removeProperty("--nav-height");
+  document.documentElement.style.setProperty("--nav-height", `${header.offsetHeight}px`);
+};
+
 if (loader) {
   window.setTimeout(() => {
     loader.classList.add("is-hidden");
@@ -12,9 +18,12 @@ if (loader) {
 const setHeaderState = () => {
   if (!header) return;
   header.classList.toggle("is-scrolled", window.scrollY > 24);
+  syncNavHeight();
 };
 
 window.addEventListener("scroll", setHeaderState);
+window.addEventListener("resize", syncNavHeight);
+window.addEventListener("load", syncNavHeight);
 setHeaderState();
 
 if (menuToggle && navLinks) {
